@@ -29,6 +29,7 @@ const assetThresholds: Record<KnownToken, ethers.BigNumber> = {
     [KnownToken.FXS]: ethers.utils.parseEther("0.005"),
     [KnownToken.BAL]: ethers.utils.parseEther("0.005"),
     [KnownToken.CRV]: ethers.utils.parseEther("0.005"),
+    [KnownToken.BNB]: ethers.utils.parseEther("0.005"),
 };
 
 export class PriceStore extends TypedEmitter<PriceEvents> {

@@ -15,4 +15,5 @@ export enum KnownToken {
     FXS = "FXS",
     CRV = "CRV",
     BAL = "BAL",
+    BNB = "BNB",
 }

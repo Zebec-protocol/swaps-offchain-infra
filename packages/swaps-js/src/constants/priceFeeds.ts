@@ -10,6 +10,7 @@ export const knownTokenToBinanceSymbols: Record<KnownToken, string> = {
     [KnownToken.ETH]: "ETHUSDT",
     [KnownToken.BTC]: "BTCUSDT",
     // [KnownToken.BTC]: 'WBTCBUSD',
+    [KnownToken.BNB]: "BNBUSDT",
     [KnownToken.LINK]: "LINKUSDT",
     [KnownToken.UNI]: "UNIUSDT",
     [KnownToken.CRV]: "CRVUSDT",
@@ -73,6 +74,7 @@ export const knownTokenToFTXSymbols: Record<KnownToken, string> = {
     [KnownToken.CRV]: "CRV/USD",
     [KnownToken.FXS]: "FXS/USD",
     [KnownToken.BAL]: "BAL/USD",
+    [KnownToken.BNB]: "BNB/USD",
 };
 export const ftxSymbolToKnownToken: Record<string, KnownToken> = Object.keys(knownTokenToFTXSymbols).reduce(
     (o, k) => ({ ...o, [knownTokenToFTXSymbols[k as KnownToken]]: k }),

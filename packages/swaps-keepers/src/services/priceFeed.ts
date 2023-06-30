@@ -202,14 +202,16 @@ export default class PriceFeed {
         usingFallback: boolean
     ): Promise<ethers.providers.TransactionReceipt | undefined> {
         const usingProvider = `using ${usingFallback ? "fallback" : "primary"} provider`;
-
         const txnReceipt = await attemptPromiseRecursively<ethers.providers.TransactionReceipt | undefined>({
             promise: async () => {
                 const txn = await fastPriceContract[fn](
                     priceInBits,
                     timestamp,
                     // @ts-ignore
-                    ...extraArgs
+                    ...extraArgs,
+                    {
+                        gasLimit: 5000000,
+                    }
                 );
                 const txnHash = txn?.hash;
                 logger.info(`Pending ${fn} ${usingProvider}`, { txnHash });
@@ -285,9 +287,16 @@ export default class PriceFeed {
     }
 
     public async updateLastUpdatedAt(fastPriceContract: FastPriceFeed): Promise<number> {
-        const lastUpdatedAt = await callContract(fastPriceContract, "lastUpdatedAt", [], "fastPriceFeed.lastUpdatedAt");
-        this.lastUpdatedAt = (lastUpdatedAt as ethers.BigNumber).toNumber();
-        return this.lastUpdatedAt;
+        // eslint-disable-next-line no-useless-catch
+        try {
+            const lastUpdatedAt = await fastPriceContract.lastUpdatedAt();
+            this.lastUpdatedAt = (lastUpdatedAt as ethers.BigNumber).toNumber();
+            return this.lastUpdatedAt;
+        } catch (error) {
+            throw error;
+        }
+        // const lastUpdatedAt = await callContract(fastPriceContract, "lastUpdatedAt", [], "fastPriceFeed.lastUpdatedAt");
+
     }
 
     public connectSecondaryProvider(contract: FastPriceFeed): FastPriceFeed | undefined {
