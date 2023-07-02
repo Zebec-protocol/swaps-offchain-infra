@@ -203,6 +203,8 @@ const main = async () => {
             pricePoller.fetchBitfinexPrices().catch((error) => pricePollerError(error, "bitfinex")),
             pricePoller.fetchCryptoComPrices().catch((error) => pricePollerError(error, "cryptoCom")),
         ]);
+        console.log("tokens", priceFeed.tokens ?? [])
+        console.log("tokenPrices", { binancePrices, bitFinexPrices, cryptoComPrices })
         priceStore.storePrices("binance", binancePrices, true);
         priceStore.storePrices("bitfinex", bitFinexPrices, true);
         priceStore.storePrices("cryptoCom", cryptoComPrices, true);
