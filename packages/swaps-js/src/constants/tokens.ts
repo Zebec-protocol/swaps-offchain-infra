@@ -57,16 +57,12 @@ export const networkTokens: Record<string, LabelledToken[]> = {
         },
     ],
     [NETWORK.GOERLI]: [
-        // {
-        //     address: "0xb4fbf271143f4fbf7b91a5ded31805e42b2208d6",
-        //     knownToken: KnownToken.ETH
-        // },
         {
-            address: "0x6d319f034c4796fCF6389D60926F39CA6f023794",
+            address: "0xc1FF38791691870Bdd3c7cbE1B32E9a4172e22f0",
             knownToken: KnownToken.BTC
         },
         {
-            address: "0x5DD7b0d4cC192a8F14a8A58e7AF30a5A0352ACa8",
+            address: "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
             knownToken: KnownToken.ETH
         },
     ]
