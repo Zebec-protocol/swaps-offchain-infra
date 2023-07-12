@@ -25,7 +25,7 @@ import {
     PositionRouter,
     PositionRouter__factory,
     VaultPriceFeed__factory,
-} from "@mycelium-ethereum/perpetual-swaps-contracts";
+} from "@subasshrestha/swap-contracts-typechain";
 import {
     asyncInterval,
     createProvider,

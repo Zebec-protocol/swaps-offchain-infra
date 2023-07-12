@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { PositionRouter } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { PositionRouter } from "@subasshrestha/swap-contracts-typechain";
 import { QueueLength } from "@mycelium-ethereum/swaps-js";
 import { callContract } from "./providers";
 

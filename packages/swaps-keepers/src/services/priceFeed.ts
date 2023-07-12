@@ -13,11 +13,13 @@ import {
     getPriceBits,
     orderPrices,
 } from "@mycelium-ethereum/swaps-js";
+
 import {
     FastPriceFeed,
     FastPriceFeed__factory,
     VaultPriceFeed__factory,
-} from "@mycelium-ethereum/perpetual-swaps-contracts";
+} from "@subasshrestha/swap-contracts-typechain";
+
 import { priceUpdateErrors } from "../utils/prometheus";
 import { callContract, fallbackProvider } from "../utils/providers";
 
@@ -122,6 +124,8 @@ export default class PriceFeed {
         return this.updatePrices(fastPriceContract, "setPricesWithBitsAndExecute", prices, [
             increaseIndex,
             decreaseIndex,
+            1,
+            1
         ]);
     }
 
@@ -204,7 +208,9 @@ export default class PriceFeed {
         const usingProvider = `using ${usingFallback ? "fallback" : "primary"} provider`;
         const txnReceipt = await attemptPromiseRecursively<ethers.providers.TransactionReceipt | undefined>({
             promise: async () => {
+                console.log(`test-${fn}`, priceInBits, timestamp, extraArgs)
                 const txn = await fastPriceContract[fn](
+                    ...(fn === "setPricesWithBitsAndExecute" ? [process.env.POSITION_ROUTER as string]: []),
                     priceInBits,
                     timestamp,
                     // @ts-ignore

@@ -2052,6 +2052,13 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@subasshrestha/swap-contracts-typechain@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@subasshrestha/swap-contracts-typechain/-/swap-contracts-typechain-1.0.2.tgz#ab3e3f3a6f2f5230f8d95687c5a03361fbc3dc54"
+  integrity sha512-duNjeEVR4QSQ+OBsn8VvNaFhhmZA+YWRoBN4a05F1wGvMB5GpVqlbjpzaqX21UOjwUxZf6NuJ8OHCby8kKHzKg==
+  dependencies:
+    "@typechain/ethers-v5" "^11.0.0"
+
 "@szmarczak/http-timer@^4.0.5":
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-4.0.6.tgz#b4a914bb62e7c272d4e5989fe4440f812ab1d807"
@@ -2095,6 +2102,14 @@
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.3.tgz#472eaab5f15c1ffdd7f8628bd4c4f753995ec79e"
   integrity sha512-yOlFc+7UtL/89t2ZhjPvvB/DeAr3r+Dq58IgzsFkOAvVC6NMJXmCGjbptdXdR9qsX7pKcTL+s87FtYREi2dEEQ==
+
+"@typechain/ethers-v5@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@typechain/ethers-v5/-/ethers-v5-11.0.0.tgz#8a11b34a386a30eed34375d05a09f893f7df838f"
+  integrity sha512-JDAvOjtzGuEQukgArIEseHznS2+v+vG3TpfODjNj4tu1kgmVu66G9gk7THOO04HJ5q+OJSLx9b46lc3GRGPIVA==
+  dependencies:
+    lodash "^4.17.15"
+    ts-essentials "^7.0.1"
 
 "@types/babel__core@^7.1.14":
   version "7.1.20"
@@ -6623,6 +6638,11 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==
 
+lodash@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
+
 logform@^2.3.2, logform@^2.4.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/logform/-/logform-2.4.2.tgz#a617983ac0334d0c3b942c34945380062795b47c"
@@ -8942,6 +8962,11 @@ triple-beam@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/triple-beam/-/triple-beam-1.3.0.tgz#a595214c7298db8339eeeee083e4d10bd8cb8dd9"
   integrity sha512-XrHUvV5HpdLmIj4uVMxHggLbFSZYIn7HEWsqePZcI50pco+MPqJ50wMGY794X7AOOhxOBAjbkqfAbEe/QMp2Lw==
+
+ts-essentials@^7.0.1:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-7.0.3.tgz#686fd155a02133eedcc5362dc8b5056cde3e5a38"
+  integrity sha512-8+gr5+lqO3G84KdiTSMRLtuyJ+nTBVRKuCrK4lidMPdVeEp0uqC875uE5NMcaA7YYMN7XsNiFQuMvasF8HT/xQ==
 
 ts-jest@28.0.5:
   version "28.0.5"

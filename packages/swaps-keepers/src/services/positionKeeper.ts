@@ -1,6 +1,6 @@
 import { TypedEmitter } from "tiny-typed-emitter";
 import { PositionInfo, QueueLength, logger } from "@mycelium-ethereum/swaps-js";
-import { FastPriceFeed, PositionRouter } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { FastPriceFeed, PositionRouter } from "@subasshrestha/swap-contracts-typechain";
 import PriceFeed, { UpdateResult } from "./priceFeed";
 import { checkedPositionRequests } from "../utils/prometheus";
 import priceStore from "../services/prices";

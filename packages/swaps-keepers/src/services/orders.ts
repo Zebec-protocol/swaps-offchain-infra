@@ -1,7 +1,7 @@
 import { TypedEmitter } from "tiny-typed-emitter";
 import { ethers } from "ethers";
 import { PositionInfo } from "@mycelium-ethereum/swaps-js";
-import { PositionRouter } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { PositionRouter } from "@subasshrestha/swap-contracts-typechain";
 import { executionSpeed } from "../utils/prometheus";
 
 interface OrderEvents {
