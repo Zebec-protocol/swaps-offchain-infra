@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { FastPriceFeed__factory } from "./FastPriceFeed__factory";
+export { PositionManager__factory } from "./PositionManager__factory";
 export { PositionRouter__factory } from "./PositionRouter__factory";
 export { Vault__factory } from "./Vault__factory";
 export { VaultPriceFeed__factory } from "./VaultPriceFeed__factory";
