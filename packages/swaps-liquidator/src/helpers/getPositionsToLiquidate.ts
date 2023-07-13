@@ -48,6 +48,7 @@ const getPositionsToLiquidate = async (
                 positionsToLiquidate.push(position);
             } catch (err) {
                 // Liquidation will fail
+                console.log(err);
             }
         })
     );
