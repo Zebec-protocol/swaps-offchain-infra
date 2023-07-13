@@ -1,6 +1,6 @@
 import { IPositionSchema } from "../models/position";
 import colors from "colors";
-import { PositionManager } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { PositionManager } from "@subasshrestha/swap-contracts-typechain";
 import { liquidations, transactionErrors } from "../utils/prometheus";
 import { ethers } from "ethers";
 

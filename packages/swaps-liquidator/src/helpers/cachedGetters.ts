@@ -1,4 +1,4 @@
-import { Vault } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { Vault } from "@subasshrestha/swap-contracts-typechain";
 import { BigNumber } from "ethers";
 import Cache from "node-cache";
 

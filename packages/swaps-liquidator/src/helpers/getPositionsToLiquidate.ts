@@ -1,5 +1,5 @@
 import { IPositionSchema } from "../models/position";
-import { PositionManager, Vault } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { PositionManager, Vault } from "@subasshrestha/swap-contracts-typechain";
 import { BigNumber } from "ethers";
 import { getCumulativeFundingRate, getLiquidationFee, getMarginFeeBps, getTokenPrice } from "./cachedGetters";
 

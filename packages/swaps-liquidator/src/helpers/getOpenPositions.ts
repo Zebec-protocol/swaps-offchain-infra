@@ -1,7 +1,7 @@
 import { Provider } from "@ethersproject/providers";
 import PositionService, { IPositionService } from "./../services/position.service";
 import ParameterService, { IParameterService } from "./../services/parameter.service";
-import { Vault } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { Vault } from "@subasshrestha/swap-contracts-typechain";
 import { lastSyncedBlock } from "../utils/prometheus";
 import { LogDescription } from "ethers/lib/utils";
 import { BigNumber } from "ethers";
