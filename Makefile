@@ -9,14 +9,14 @@ export APP_ROOT := $(shell 'pwd')
 
 _build-and-push-keeper:
 	@docker build $(APP_ROOT) \
-		-f $(APP_ROOT)/docker/Dockerfile.dev \
+		-f $(APP_ROOT)/docker/Dockerfile.prod \
 		-t $(KEEPER_IMAGE_NAME) --target swaps-keeper
 	@docker push $(KEEPER_IMAGE_NAME)
 
 
 _build-and-push-liquidator:
 	@docker build $(APP_ROOT) \
-		-f $(APP_ROOT)/docker/Dockerfile.dev \
+		-f $(APP_ROOT)/docker/Dockerfile.prod \
 		-t $(LIQUIDATOR_IMAGE_NAME) --target swaps-liquidator
 	@docker push $(LIQUIDATOR_IMAGE_NAME)
 
