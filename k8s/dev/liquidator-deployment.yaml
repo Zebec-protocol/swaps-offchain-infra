@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    secrets.doppler.com/reload: "true"
+  creationTimestamp: null
+  labels:
+    app: liquidator-app
+  name: liquidator-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: liquidator-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: liquidator-app
+    spec:
+      containers:
+      - image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:liquidator-app-frontend-dev-b2dff70664850073b38c246e47f8ab16874f488b
+        name: liquidator-app
+        envFrom:
+          - secretRef:
+              name: dev-liquidator-app-secrets
+status: {}

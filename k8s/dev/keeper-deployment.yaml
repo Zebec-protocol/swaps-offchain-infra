@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    secrets.doppler.com/reload: "true"
+  creationTimestamp: null
+  labels:
+    app: keeper-app
+  name: keeper-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keeper-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: keeper-app
+    spec:
+      containers:
+      - image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:keeper-app-frontend-dev-b2dff70664850073b38c246e47f8ab16874f488b
+        name: keeper-app
+        envFrom:
+          - secretRef:
+              name: dev-keeper-app-secrets
+status: {}

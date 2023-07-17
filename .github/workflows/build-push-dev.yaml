@@ -1,0 +1,41 @@
+name: dev-build-and-push
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  AWS_REGION: us-east-1
+  KEEPER_IMAGE_NAME: ${{ vars.ECR_URI}}:keeper-app-${{github.ref_name}}-${{ github.sha }}
+  LIQUIDATOR_IMAGE_NAME: ${{ vars.ECR_URI}}:liquidator-app-${{github.ref_name}}-${{ github.sha }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Deploy and Update Image Tag
+        run: |
+          make deploy
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          default_author: github_actions
+          cwd: "./k8s/dev/"
+          message: Updated image tag to ${{env.IMAGE_NAME}}.

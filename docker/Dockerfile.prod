@@ -1,0 +1,56 @@
+
+################################################################
+#          Base image, set working directory and envs          #
+################################################################
+FROM node:18-alpine AS base
+
+################################################################
+#          Build image, install dependencies and build         #
+################################################################
+
+FROM base AS builder
+
+
+WORKDIR /app
+
+RUN apk add --no-cache libc6-compat
+
+COPY package.json tsconfig.base.json nx.json yarn.lock ./
+RUN yarn --frozen-lockfile
+
+COPY . .
+
+RUN yarn build --frozen-lockfile  && \
+    yarn install --production --ignore-scripts  && \
+    yarn cache clean
+
+################################################################
+#         Keepers prod image, copy all the files and run       #
+################################################################
+
+FROM base AS swaps-keeper
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+CMD ["yarn", "start:keepers"]
+
+
+################################################################
+#      Liquidators prod image, copy all the files and run      #
+################################################################
+
+FROM base AS swaps-liquidator
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+
+CMD ["yarn", "start:liquidator"]
+
+
