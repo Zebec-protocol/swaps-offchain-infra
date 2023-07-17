@@ -10,15 +10,15 @@ export APP_ROOT := $(shell 'pwd')
 _build-and-push-keeper:
 	@docker build $(APP_ROOT) \
 		-f $(APP_ROOT)/docker/Dockerfile.dev \
-		-t $(KEEPERS_IMAGE_NAME) --target swaps-keeper
-	@docker push $(KEEPERS_IMAGE_NAME)
+		-t $(KEEPER_IMAGE_NAME) --target swaps-keeper
+	@docker push $(KEEPER_IMAGE_NAME)
 
 
 _build-and-push-liquidator:
 	@docker build $(APP_ROOT) \
 		-f $(APP_ROOT)/docker/Dockerfile.dev \
-		-t $(LIQUIDATORS_IMAGE_NAME) --target swaps-liquidator
-	@docker push $(LIQUIDATORS_IMAGE_NAME)
+		-t $(LIQUIDATOR_IMAGE_NAME) --target swaps-liquidator
+	@docker push $(LIQUIDATOR_IMAGE_NAME)
 
 
 
@@ -26,13 +26,13 @@ build-and-push-prod: _build-and-push-keeper _build-and-push-liquidator ## Build 
 
 
 _update-keeper-argoconfig:
-	@kubectl set image --filename k8s/dev/keeper-deployment.yaml keeper-app=$(KEEPERS_IMAGE_NAME) --local -o yaml > new-deployment.yaml
+	@kubectl set image --filename k8s/dev/keeper-deployment.yaml keeper-app=$(KEEPER_IMAGE_NAME) --local -o yaml > new-deployment.yaml
 	@cat new-deployment.yaml
 	@rm -rf k8s/dev/keeper-deployment.yaml
 	@mv new-deployment.yaml k8s/dev/keeper-deployment.yaml
 
 _update-liquidator-argoconfig:
-	@kubectl set image --filename k8s/dev/liquidator-deployment.yaml liquidator-app=$(LIQUIDATORS_IMAGE_NAME) --local -o yaml > new-deployment.yaml
+	@kubectl set image --filename k8s/dev/liquidator-deployment.yaml liquidator-app=$(LIQUIDATOR_IMAGE_NAME) --local -o yaml > new-deployment.yaml
 	@cat new-deployment.yaml
 	@rm -rf k8s/dev/liquidator-deployment.yaml
 	@mv new-deployment.yaml k8s/dev/liquidator-deployment.yaml
