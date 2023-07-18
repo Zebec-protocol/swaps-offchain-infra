@@ -2,12 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { FastPriceFeed } from "./FastPriceFeed";
+export type { OrderBook } from "./OrderBook";
 export type { PositionManager } from "./PositionManager";
 export type { PositionRouter } from "./PositionRouter";
 export type { Vault } from "./Vault";
 export type { VaultPriceFeed } from "./VaultPriceFeed";
 export * as factories from "./factories";
 export { FastPriceFeed__factory } from "./factories/FastPriceFeed__factory";
+export { OrderBook__factory } from "./factories/OrderBook__factory";
 export { PositionManager__factory } from "./factories/PositionManager__factory";
 export { PositionRouter__factory } from "./factories/PositionRouter__factory";
 export { Vault__factory } from "./factories/Vault__factory";
