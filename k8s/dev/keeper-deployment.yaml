@@ -27,7 +27,7 @@ spec:
       - envFrom:
         - secretRef:
             name: dev-keeper-app-secrets
-        image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:keeper-app-dev-21116966c057075e5b679b06cb3eedf3be66f025
+        image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:keeper-app-dev-aaa1c2ca0cabeb6d760bca3a7c996248ad428c3e
         name: keeper-app
         resources: {}
 status: {}
