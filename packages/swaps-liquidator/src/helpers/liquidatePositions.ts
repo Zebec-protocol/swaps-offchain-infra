@@ -6,7 +6,8 @@ import { ethers } from "ethers";
 
 export const liquidateInBatches = async (positions: IPositionSchema[], positionManager: PositionManager) => {
     let cursor = 0;
-    const positionsPerTransaction = 50;
+    // const positionsPerTransaction = 50;
+    const positionsPerTransaction = 1; // Since gmx contract doesn't has liquidatePositions function
     while (cursor < positions.length) {
         const batchPositions = positions.slice(cursor, cursor + positionsPerTransaction);
 

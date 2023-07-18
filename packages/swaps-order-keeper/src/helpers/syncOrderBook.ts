@@ -1,4 +1,4 @@
-import { OrderBook__factory } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { OrderBook__factory } from "@subasshrestha/swap-contracts-typechain";
 import DecreaseOrderService from "../services/decreaseOrderService";
 import SwapOrderService from "../services/swapOrderService";
 import IncreaseOrderService from "../services/increaseOrderService";

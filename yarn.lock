@@ -2052,10 +2052,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@subasshrestha/swap-contracts-typechain@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@subasshrestha/swap-contracts-typechain/-/swap-contracts-typechain-1.0.4.tgz#3e2fc0d2a45e3faed448ebf9d8064fca2b3f6d4f"
-  integrity sha512-i5c+8cJJ+E2DBcKGObfcmAjnxEGDtLyMsV3xeORn/qb/o2a32jL96WEEuIorvoJ6RV66O41+gj1QMkpYEVl94A==
+"@subasshrestha/swap-contracts-typechain@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@subasshrestha/swap-contracts-typechain/-/swap-contracts-typechain-1.0.6.tgz#7521165c85808dee7c03d93440708907e0d9d371"
+  integrity sha512-XJ5GR9aQvamNcoR2ONtB9LaGA3TJK8FLSW56tYMTIzuB8bpyeKfJCE3s8VDxRn5++D0S4S8o9GFQ9bH2TBMpHw==
   dependencies:
     "@typechain/ethers-v5" "^11.0.0"
 

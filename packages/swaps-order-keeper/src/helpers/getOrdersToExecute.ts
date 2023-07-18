@@ -1,4 +1,4 @@
-import { Vault__factory } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { Vault__factory } from "@subasshrestha/swap-contracts-typechain";
 import { BigNumber, ethers } from "ethers";
 import DecreaseOrder from "../models/DecreaseOrder";
 import IncreaseOrder from "../models/IncreaseOrder";

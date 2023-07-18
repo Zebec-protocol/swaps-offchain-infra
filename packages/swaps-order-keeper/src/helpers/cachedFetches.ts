@@ -1,5 +1,5 @@
 import Cache from "node-cache";
-import { Vault } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { Vault } from "@subasshrestha/swap-contracts-typechain";
 import { ethers, BigNumber } from "ethers";
 
 const INTERVAL_MS = Number(process.env.INTERVAL_MS) || 60 * 1000;

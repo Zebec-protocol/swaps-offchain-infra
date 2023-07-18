@@ -1,4 +1,4 @@
-import { PositionManager__factory } from "@mycelium-ethereum/perpetual-swaps-contracts";
+import { PositionManager__factory } from "@subasshrestha/swap-contracts-typechain";
 import { ethers } from "ethers";
 import { OrderList } from "../utils/orders";
 import colors from "colors";
@@ -39,14 +39,16 @@ async function executeOrderBatch(orders: OrderList, signer: ethers.Signer) {
     const positionManager = PositionManager__factory.connect(process.env.POSITION_MANAGER_ADDRESS, signer);
     const feeReceiver = process.env.FEE_RECEIVER_ADDRESS;
 
-    const incAccounts: string[] = [];
-    const incOrderIndices: number[] = [];
-    await Promise.all(
+    // const incAccounts: string[] = [];
+    // const incOrderIndices: number[] = [];
+    const increaseReciepts = await Promise.all(
         orders.increaseOrders.map(async (order) => {
             try {
                 await positionManager.estimateGas.executeIncreaseOrder(order.account, order.orderIndex, feeReceiver);
-                incAccounts.push(order.account);
-                incOrderIndices.push(order.orderIndex);
+                const tx = await positionManager.executeIncreaseOrder(order.account, order.orderIndex, feeReceiver);
+                // incAccounts.push(order.account);
+                // incOrderIndices.push(order.orderIndex);
+                return await tx.wait();
             } catch (err) {
                 // The order will not execute, don't include it in the batch
                 const revertReason = extractRevertReason(err);
@@ -57,14 +59,16 @@ async function executeOrderBatch(orders: OrderList, signer: ethers.Signer) {
         })
     );
 
-    const decAccounts: string[] = [];
-    const decOrderIndices: number[] = [];
-    await Promise.all(
+    // const decAccounts: string[] = [];
+    // const decOrderIndices: number[] = [];
+    const decreaseReciepts = await Promise.all(
         orders.decreaseOrders.map(async (order) => {
             try {
                 await positionManager.estimateGas.executeDecreaseOrder(order.account, order.orderIndex, feeReceiver);
-                decAccounts.push(order.account);
-                decOrderIndices.push(order.orderIndex);
+                const tx = await positionManager.executeDecreaseOrder(order.account, order.orderIndex, feeReceiver);
+                // decAccounts.push(order.account);
+                // decOrderIndices.push(order.orderIndex);
+                return tx.wait();
             } catch (err) {
                 // The order will not execute, don't include it in the batch
                 const revertReason = extractRevertReason(err);
@@ -75,14 +79,20 @@ async function executeOrderBatch(orders: OrderList, signer: ethers.Signer) {
         })
     );
 
-    const swapAccounts: string[] = [];
-    const swapOrderIndices: number[] = [];
-    await Promise.all(
+    // const swapAccounts: string[] = [];
+    // const swapOrderIndices: number[] = [];
+    const swapReceipts = await Promise.all(
         orders.swapOrders.map(async (order) => {
+            console.log("order", order)
             try {
                 await positionManager.estimateGas.executeSwapOrder(order.account, order.orderIndex, feeReceiver);
-                swapAccounts.push(order.account);
-                swapOrderIndices.push(order.orderIndex);
+
+                const tx = await positionManager.executeSwapOrder(order.account, order.orderIndex, feeReceiver);
+
+                // swapAccounts.push(order.account);
+                // swapOrderIndices.push(order.orderIndex);
+                return tx.wait();
+
             } catch (err) {
                 // The order will not execute, don't include it in the batch
                 const revertReason = extractRevertReason(err);
@@ -93,64 +103,79 @@ async function executeOrderBatch(orders: OrderList, signer: ethers.Signer) {
         })
     );
 
-    const validOrdersToExecute = incAccounts.length + decAccounts.length + swapAccounts.length;
+    const allReceipts = [...increaseReciepts, ...decreaseReciepts, ...swapReceipts];
 
-    // The last order is sometimes not executed, so we add a dummy order
-    if (incAccounts.length) {
-        incAccounts.push(ethers.constants.AddressZero);
-        incOrderIndices.push(0);
-    }
-    if (decAccounts.length) {
-        decAccounts.push(ethers.constants.AddressZero);
-        decOrderIndices.push(0);
-    }
-    if (swapAccounts.length) {
-        swapAccounts.push(ethers.constants.AddressZero);
-        swapOrderIndices.push(0);
-    }
+    console.log(colors.cyan(`Executed ${allReceipts.length} orders`));
+    console.log(allReceipts);
 
-    if (validOrdersToExecute !== 0) {
-        const tx = await positionManager.executeMany(
-            incAccounts,
-            incOrderIndices,
-            decAccounts,
-            decOrderIndices,
-            swapAccounts,
-            swapOrderIndices,
-            feeReceiver
-        );
+    // const validOrdersToExecute = incAccounts.length + decAccounts.length + swapAccounts.length;
 
-        const receipt = await tx.wait();
-        const errorEvents =
-            receipt.events?.filter((ev) => {
+    // // The last order is sometimes not executed, so we add a dummy order
+    // if (incAccounts.length) {
+    //     incAccounts.push(ethers.constants.AddressZero);
+    //     incOrderIndices.push(0);
+    // }
+    // if (decAccounts.length) {
+    //     decAccounts.push(ethers.constants.AddressZero);
+    //     decOrderIndices.push(0);
+    // }
+    // if (swapAccounts.length) {
+    //     swapAccounts.push(ethers.constants.AddressZero);
+    //     swapOrderIndices.push(0);
+    // }
+
+    // if (validOrdersToExecute !== 0) {
+    //     const tx = await positionManager.executeMany(
+    //         incAccounts,
+    //         incOrderIndices,
+    //         decAccounts,
+    //         decOrderIndices,
+    //         swapAccounts,
+    //         swapOrderIndices,
+    //         feeReceiver
+    //     );
+
+    //     const receipt = await tx.wait();
+    //     const errorEvents =
+    //         receipt.events?.filter((ev) => {
+    //             return (
+    //                 ["ExecuteIncreaseOrderError", "ExecuteDecreaseOrderError", "ExecuteSwapOrderError"].includes(
+    //                     ev.event
+    //                 ) && ev.args.account !== ethers.constants.AddressZero
+    //             );
+    //         }) || [];
+
+    const errorEvents = allReceipts
+        .map((receipt) => {
+            return receipt.events?.filter((ev) => {
                 return (
                     ["ExecuteIncreaseOrderError", "ExecuteDecreaseOrderError", "ExecuteSwapOrderError"].includes(
                         ev.event
                     ) && ev.args.account !== ethers.constants.AddressZero
                 );
-            }) || [];
+            });
+        }).flat() || [];
 
-        const numExecuted = orders.total() - errorEvents.length;
-        ordersExecuted.inc(numExecuted);
+    const numExecuted = orders.total() - errorEvents.length;
+    ordersExecuted.inc(numExecuted);
 
-        console.log(colors.cyan(`Transaction executed! Hash: ${tx.hash}`));
-        console.log(`Number of orders executed: ${numExecuted}`);
-        logOrderErrors(errorEvents);
-        for (const ev of errorEvents) {
-            if (isInvalidPrice(ev)) {
-                // Nothing to do, price changed since we last checked
-                continue;
-            } else if (shouldBeDeleted(ev)) {
-                if (ev.event === "ExecuteDecreaseOrderError") {
-                    await decreaseOrderService.delete(ev.args.account, ev.args.orderIndex);
-                } else if (ev.event === "ExecuteIncreaseOrderError") {
-                    await increaseOrderService.delete(ev.args.account, ev.args.orderIndex);
-                } else if (ev.event === "ExecuteSwapOrderError") {
-                    await swapOrderService.delete(ev.args.account, ev.args.orderIndex);
-                }
-            } else {
-                orderExecutionError.inc();
+    // console.log(colors.cyan(`Transaction executed! Hash: ${tx.hash}`));
+    // console.log(`Number of orders executed: ${numExecuted}`);
+    logOrderErrors(errorEvents);
+    for (const ev of errorEvents) {
+        if (isInvalidPrice(ev)) {
+            // Nothing to do, price changed since we last checked
+            continue;
+        } else if (shouldBeDeleted(ev)) {
+            if (ev.event === "ExecuteDecreaseOrderError") {
+                await decreaseOrderService.delete(ev.args.account, ev.args.orderIndex);
+            } else if (ev.event === "ExecuteIncreaseOrderError") {
+                await increaseOrderService.delete(ev.args.account, ev.args.orderIndex);
+            } else if (ev.event === "ExecuteSwapOrderError") {
+                await swapOrderService.delete(ev.args.account, ev.args.orderIndex);
             }
+        } else {
+            orderExecutionError.inc();
         }
     }
 }
