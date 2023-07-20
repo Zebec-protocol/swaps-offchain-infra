@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    secrets.doppler.com/reload: "true"
+  creationTimestamp: null
+  labels:
+    app: order-keeper-app
+  name: order-keeper-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-keeper-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: order-keeper-app
+    spec:
+      containers:
+      - envFrom:
+        - secretRef:
+            name: dev-order-keeper-app-secrets
+        image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:order-keeper-app-dev-0f16adc2e74d1cf3f32abcfe66359c7459544782
+        name: order-keeper-app
+        resources: {}
+status: {}

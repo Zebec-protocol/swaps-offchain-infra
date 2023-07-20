@@ -21,8 +21,14 @@ _build-and-push-liquidator:
 	@docker push $(LIQUIDATOR_IMAGE_NAME)
 
 
+_build-and-push-order-keeper:
+	@docker build $(APP_ROOT) \
+		-f $(APP_ROOT)/docker/Dockerfile.prod \
+		-t $(ORDER_KEEPER_IMAGE_NAME) --target swaps-order-keeper
+	@docker push $(ORDER_KEEPER_IMAGE_NAME)
 
-build-and-push-prod: _build-and-push-keeper _build-and-push-liquidator ## Build and push docker images to the registry
+
+build-and-push-prod: _build-and-push-keeper _build-and-push-liquidator _build-and-push-order-keeper ## Build and push docker images to the registry
 
 
 _update-keeper-argoconfig:
@@ -37,8 +43,13 @@ _update-liquidator-argoconfig:
 	@rm -rf k8s/dev/liquidator-deployment.yaml
 	@mv new-deployment.yaml k8s/dev/liquidator-deployment.yaml
 
+_update-order-keeper-argoconfig:
+	@kubectl set image --filename k8s/dev/order-keeper-deployment.yaml order-keeper-app=$(ORDER_KEEPER_IMAGE_NAME) --local -o yaml > new-deployment.yaml
+	@cat new-deployment.yaml
+	@rm -rf k8s/dev/order-keeper-deployment.yaml
+	@mv new-deployment.yaml k8s/dev/order-keeper-deployment.yaml
 
-update-argoconfig: _update-keeper-argoconfig _update-liquidator-argoconfig ## Update argo config with new image tag
+update-argoconfig: _update-keeper-argoconfig _update-liquidator-argoconfig _update-order-keeper-argoconfig ## Update argo config with new image tag
 
 deploy: build-and-push-prod update-argoconfig ## Deploy to kubernetes
 	@echo "Completed!"

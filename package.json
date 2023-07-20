@@ -9,6 +9,7 @@
         "dev:liquidator": "npx nx run swaps-liquidator:dev",
         "start:keepers": "node dist/packages/swaps-keepers/main.js",
         "start:liquidator": "node dist/packages/swaps-liquidator/main.js",
+        "start:order-keeper": "node dist/packages/swaps-order-keeper/main.js",
         "build": "npx nx affected --target=build --all",
         "test": "npx nx affected --target=test --all",
         "lint": "npx nx affected --target=lint --all",
