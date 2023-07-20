@@ -27,7 +27,7 @@ spec:
       - envFrom:
         - secretRef:
             name: dev-liquidator-app-secrets
-        image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:liquidator-app-dev-0f16adc2e74d1cf3f32abcfe66359c7459544782
+        image: 721574006748.dkr.ecr.us-east-1.amazonaws.com/dev-saas-zebec:liquidator-app-dev-b4f1201115914856dd717d36cfa7118f86fa836d
         name: liquidator-app
         resources: {}
 status: {}
